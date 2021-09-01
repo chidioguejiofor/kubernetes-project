@@ -1,0 +1,57 @@
+version: "3"
+services:
+  
+  backend_user:
+    build:
+      context: ./udagram-api-user
+    image: backend_user
+    environment: 
+      - POSTGRES_USERNAME=$POSTGRES_USERNAME
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_HOST=host.docker.internal
+      - AWS_REGION=$AWS_REGION
+      - AWS_BUCKET=$AWS_BUCKET
+      - AWS_PROFILE=$AWS_PROFILE
+      - AWS_ACCESS_ID=$AWS_ACCESS_ID
+      - AWS_ACCESS_SECRET=$AWS_ACCESS_SECRET
+      - URL=$URL
+      - JWT_SECRET='fdasfuybofne7&**^&^%^782323'
+  backend_feed:
+    build:
+      context: ./udagram-api-feed
+    image: backend_feed
+    environment: 
+      - POSTGRES_USERNAME=$POSTGRES_USERNAME
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_HOST=host.docker.internal
+      - AWS_REGION=$AWS_REGION
+      - AWS_BUCKET=$AWS_BUCKET
+      - AWS_PROFILE=$AWS_PROFILE
+      - AWS_ACCESS_ID=$AWS_ACCESS_ID
+      - AWS_ACCESS_SECRET=$AWS_ACCESS_SECRET
+      - URL=$URL
+      - JWT_SECRET='fdasfuybofne7&**^&^%^782323'
+  frontend:
+    build:
+      context: ./udagram-frontend
+    image: frontend
+    depends_on: 
+      - backend_feed
+      - backend_user
+      - reverseproxy
+    ports: 
+      - 8100:80
+    restart: always
+  reverseproxy:
+    build:
+      context: ./udagram-reverseproxy
+    restart: always
+    depends_on: 
+      - backend_feed
+      - backend_user
+    image: reverseproxy
+    ports: 
+      - 8080:8080
+    
