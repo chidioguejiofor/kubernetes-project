@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backenduser
+  labels:
+    app: backenduser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backenduser
+  template:
+    metadata:
+      labels:
+        app: backenduser
+    spec:
+      containers:
+      - name: backenduser
+        image: profchidi1/udagram-api-user
+        env:
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRES_USERNAME 
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRES_PASSWORD 
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRES_DB 
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: POSTGRES_HOST 
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: PORT 
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: AWS_REGION 
+        - name: AWS_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: AWS_BUCKET
+        - name: JWT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: env-configmap
+              key: JWT_SECRET
+
+        - name: AWS_ACCESS_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_ACCESS_ID 
+        - name: AWS_ACCESS_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: AWS_ACCESS_SECRET
+        ports:
+        - containerPort: 8080
+     
