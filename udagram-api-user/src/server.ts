@@ -45,6 +45,11 @@ import { V0_USER_MODELS } from "./controllers/v0/model.index";
     res.send("/api/v0/");
   });
 
+  // Health Route
+  app.all( '/health', async ( req, res ) => {
+    res.send( 'Healthy' );
+  } );
+  
   // Start the Server
   app.listen(port, () => {
     console.log(`server running ${config.url}`);
