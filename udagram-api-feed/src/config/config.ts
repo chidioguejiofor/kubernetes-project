@@ -17,4 +17,3 @@ export const config = {
   secret_access_key:  process.env.AWS_ACCESS_SECRET,
 };
 
-console.log("<----", config);

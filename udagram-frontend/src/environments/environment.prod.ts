@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const API_HOST = process.env.REACT_API_HOST || 'http://http://a3e949a1a345f46babb2884988b97c00-1746680753.eu-central-1.elb.amazonaws.com:8080/';
+const API_HOST = 'http://a60a1c2fab6a547aaaeeacb688570016-1121581409.eu-central-1.elb.amazonaws.com:8080';
 
 export const environment = {
   production: false,
