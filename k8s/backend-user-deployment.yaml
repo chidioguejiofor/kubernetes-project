@@ -5,7 +5,7 @@ metadata:
   labels:
     app: backenduser
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: backenduser
@@ -17,6 +17,13 @@ spec:
       containers:
       - name: backenduser
         image: profchidi1/udagram-api-user
+        # resources:
+        #   requests:
+        #     memory: "256Mi"
+        #     cpu: "250m"
+        #   limits:
+        #     memory: "512Mi"
+        #     cpu: "500m"
         env:
         - name: POSTGRES_USERNAME
           valueFrom:
@@ -71,4 +78,10 @@ spec:
               key: AWS_ACCESS_SECRET
         ports:
         - containerPort: 8080
+        resources:
+          requests:
+            cpu: 200m
+          limits:
+            cpu: 600m
+
      
